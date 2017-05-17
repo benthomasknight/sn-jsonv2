@@ -1,0 +1,12 @@
+# modules
+node_modules
+
+# personal config
+personal.json
+
+# File types
+*.js.map
+*.js
+
+# Editor
+.vscode
