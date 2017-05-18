@@ -16,7 +16,7 @@ interface ISNJsonV2 {
 
 export class SNJsonV2 implements ISNJsonV2 {
   constructor(public readonly instance:string, private username:string, private password:string) {
-    debug('Instance: %s, Username: %s', instance, username, password);
+    debug('Instance: %s, Username: %s', instance, username);
   }
 
   run(query:SNQuery | ISNQueryOptions):Promise<ISNRecords> {

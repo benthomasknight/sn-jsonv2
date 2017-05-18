@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "test": "npm run-script build:test && node ./node_modules/mocha/bin/mocha -t 10000",
+    "test": "npm run-script build:test && node ./node_modules/mocha/bin/mocha \"test/bin/test\" -t 20000",
     "build:test": "cd ./test && tsc && cd ../",
     "build:main":"tsc",
     "build":"npm run build:main && npm run build:test"

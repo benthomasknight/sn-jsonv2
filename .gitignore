@@ -4,9 +4,8 @@ node_modules
 # personal config
 personal.json
 
-# File types
+# Built files
 *.js.map
-*.js
 
 # Editor
 .vscode
