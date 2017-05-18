@@ -1,4 +1,5 @@
 import * as Debug from 'debug';
+import { ISNQueryOptions } from "./SNQuery";
 import { ISNRecords } from "./SNRecords";
 var debug = Debug('SNJsonV2');
 
@@ -10,7 +11,7 @@ debug('booting SNJsonV2');
 interface ISNJsonV2 {
   instance:string;
 
-  get(query:SNQuery):Promise<ISNRecords>;
+  run(query:SNQuery):Promise<ISNRecords>;
 }
 
 export class SNJsonV2 implements ISNJsonV2 {
@@ -18,9 +19,13 @@ export class SNJsonV2 implements ISNJsonV2 {
     debug('Instance: %s, Username: %s', instance, username, password);
   }
 
-  get(query:SNQuery):Promise<ISNRecords> {
+  run(query:SNQuery | ISNQueryOptions):Promise<ISNRecords> {
+    if(!(query instanceof SNQuery)) {
+      query = new SNQuery(query);
+    }
+
     var options = {
-      uri:this.getUrl(query),
+      uri:this.getUrl(query as SNQuery),
       json:true,
       auth:{
         username:this.username,

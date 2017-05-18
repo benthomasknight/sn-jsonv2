@@ -6,7 +6,9 @@
   "scripts": {
     "start": "tsc && node dist/index.js",
     "test": "npm run-script build:test && node ./node_modules/mocha/bin/mocha -t 10000",
-    "build:test": "cd ./test && tsc && cd ../"
+    "build:test": "cd ./test && tsc && cd ../",
+    "build:main":"tsc",
+    "build":"npm run build:main && npm run build:test"
   },
   "keywords": [
     "servicenow",
@@ -18,7 +20,6 @@
   "author": "benthomasknight",
   "license": "ISC",
   "dependencies": {
-    "@types/request": "0.0.43",
     "debug": "^2.6.6",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
@@ -29,6 +30,7 @@
     "@types/debug": "0.0.29",
     "@types/mocha": "^2.2.41",
     "@types/node": "^7.0.18",
+    "@types/request": "0.0.43",
     "@types/request-promise-native": "^1.0.5",
     "chai": "^3.5.0",
     "config": "^1.26.1",

@@ -1,6 +1,5 @@
 import * as mocha from 'mocha';
-import { GetActions } from "./../src/SNQueryUtil";
-import { SNQuery, ISNQueryOptions } from "./../src/SNQuery";
+import { SNQuery, ISNQueryOptions, GetActions } from "./../src/";
 import {expect} from 'chai';
 
 describe('SNQuery', function() {
