@@ -1,14 +1,14 @@
 {
   "name": "sn-jsonv2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Wrapper for the ServiceNow JSONv2 API",
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
     "test": "npm run-script build:test && node ./node_modules/mocha/bin/mocha \"test/bin/test\" -t 20000",
     "build:test": "cd ./test && tsc && cd ../",
-    "build:main":"tsc",
-    "build":"npm run build:main && npm run build:test"
+    "build:main": "tsc",
+    "build": "npm run build:main && npm run build:test"
   },
   "keywords": [
     "servicenow",
