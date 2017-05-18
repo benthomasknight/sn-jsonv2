@@ -40,5 +40,16 @@
     "type": "git",
     "url": "https://github.com/benthomasknight/sn-jsonv2"
   },
-  "bugs": "https://github.com/benthomasknight/sn-jsonv2/issues"
+  "bugs": "https://github.com/benthomasknight/sn-jsonv2/issues",
+  "files": [
+    "dist/index.js",
+    "dist/SNJsonV2.js",
+    "dist/SNQuery.js",
+    "dist/SNQueryUtil.js",
+    "dist/SNRecords.js",
+    "index.js",
+    "package.json",
+    "README.md",
+    ".npmignore"
+  ]
 }
