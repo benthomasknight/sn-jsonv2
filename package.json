@@ -46,11 +46,17 @@
   "bugs": "https://github.com/benthomasknight/sn-jsonv2/issues",
   "files": [
     "dist/index.js",
+    "dist/index.d.ts",
     "dist/SNJsonV2.js",
+    "dist/SNJsonV2.d.ts",
     "dist/SNQuery.js",
+    "dist/SNQuery.d.ts",
     "dist/SNQueryUtil.js",
+    "dist/SNQueryUtil.d.ts",
     "dist/SNRecords.js",
+    "dist/SNRecords.d.ts",
     "index.js",
+    "index.d.ts",
     "package.json",
     "README.md",
     ".npmignore"
