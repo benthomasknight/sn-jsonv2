@@ -44,6 +44,7 @@ To run a query you you need to have an SNJsonV2 object with instance information
 
 ```#Javascript
 var SNJsonV2 = require('sn-jsonv2').SNJsonV2;
+var GetActions = require('sn-jsonv2').GetActions;
 
 var instance = new SNJsonV2('instanceName', 'username', 'password');
 
@@ -61,9 +62,28 @@ var options = {
 var results = instance.run(options);
 ```
 
+### Posting
+
+This API supports sending data to the instance, as described [here](https://docs.servicenow.com/bundle/istanbul-servicenow-platform/page/integrate/inbound-other-web-services/concept/c_DataModificationAPI.html). To post to the server, add what you want to send to the 'data' variable on the query options object. Each key on the object should be a column name on the provided table.
+
+```#Javascript
+var PostActions = require('sn-jsonv2').PostActions;
+
+var options = {
+  table:'sys_user',
+  sys_parm_action:PostActions.insert,
+  data:{
+    user_name:'ben.knight',
+    first_name:'Ben',
+    last_name:'Knight',
+    ...
+  }
+}
+```
+
 ## Bugs and/or Feature Requests
 
-Create an issue [here]().
+Create an issue [here](https://github.com/benthomasknight/sn-jsonv2/issues).
 
 ## Contributing
 
