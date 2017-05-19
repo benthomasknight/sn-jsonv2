@@ -1,9 +1,9 @@
 {
   "name": "sn-jsonv2",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Wrapper for the ServiceNow JSONv2 API",
   "main": "index.js",
-  "types":"index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "start": "tsc && node dist/index.js",
     "test": "npm run-script build:test && node ./node_modules/mocha/bin/mocha \"test/bin/test\" -t 20000",
