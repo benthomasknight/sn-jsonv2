@@ -1,5 +1,6 @@
 "use strict";
 const Debug = require("debug");
+const SNQueryUtil_1 = require("./SNQueryUtil");
 var debug = Debug('SNJsonV2');
 const SNQuery_1 = require("./SNQuery");
 const request = require("request-promise-native");
@@ -21,16 +22,25 @@ class SNJsonV2 {
             auth: {
                 username: this.username,
                 password: this.password
-            }
+            },
+            method: ((query.sysparm_action in SNQueryUtil_1.GetActions) ? 'get' : 'post'),
+            timeout: query.timeout || 20000
         };
+        if ([SNQueryUtil_1.PostActions.insert, SNQueryUtil_1.PostActions.insertMultiple, SNQueryUtil_1.PostActions.update].indexOf(query.sysparm_action) != -1) {
+            options.body = query.data;
+        }
         return request(options).then((value) => {
             debug('Request returned successfully');
             debug('%O', value);
             return value;
         })
-            .catch((reason) => {
+            .catch((err) => {
             debug('Error in get request');
-            debug('%O', reason);
+            debug('%O', err);
+            if (err.code === 'ETIMEDOUT') {
+                throw err;
+            }
+            throw new Error('Query failed to complete. Reason: ' + err);
         });
     }
     getUrl(query) {

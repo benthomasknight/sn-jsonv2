@@ -1,4 +1,5 @@
 import * as Debug from 'debug';
+import { GetActions, PostActions } from "./SNQueryUtil";
 import { ISNQueryOptions } from "./SNQuery";
 import { ISNRecords } from "./SNRecords";
 var debug = Debug('SNJsonV2');
@@ -30,17 +31,28 @@ export class SNJsonV2 implements ISNJsonV2 {
       auth:{
         username:this.username,
         password:this.password
-      }
+      },
+      method:((query.sysparm_action in GetActions) ? 'get' : 'post'),
+      timeout:query.timeout || 20000
     } as request.Options;
+
+    if([PostActions.insert, PostActions.insertMultiple, PostActions.update].indexOf(<PostActions>query.sysparm_action) != -1) {
+      options.body = query.data;
+    }
 
     return request(options).then((value:any) => {
       debug('Request returned successfully');
       debug('%O', value);
       return value;
     })
-    .catch((reason:any) => {
+    .catch((err:any) => {
       debug('Error in get request');
-      debug('%O', reason);
+      debug('%O', err);
+
+      if(err.code === 'ETIMEDOUT') {
+        throw err;
+      }
+      throw new Error('Query failed to complete. Reason: ' + err);
     });
   }
 

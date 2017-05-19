@@ -12,6 +12,10 @@ export interface ISNQueryOptions {
   sysparm_sys_id?: string;
   displayvalue?: boolean;
   displayvariables?: boolean;
+  data?:any;
+
+  // Extra options for the query
+  timeout?:number;
 }
 
 interface ISNQuery extends ISNQueryOptions {
@@ -23,9 +27,9 @@ export class SNQuery implements ISNQuery {
   public sysparm_action: GetActions | PostActions;
 
   constructor(options:ISNQueryOptions);
-  constructor(table: string, sysparm_action: GetActions | PostActions, sysparm_view?: string, sysparm_query?: string, sysparm_sys_id?: string, sysparm_record_count?: number, displayvalue?: boolean, displayvariables?: boolean);
+  constructor(table: string, sysparm_action: GetActions | PostActions, sysparm_view?: string, sysparm_query?: string, sysparm_sys_id?: string, sysparm_record_count?: number, displayvalue?: boolean, displayvariables?: boolean, data?:any);
 
-  constructor(tableOROptions:ISNQueryOptions | string, sysparm_action?: GetActions | PostActions, public sysparm_view?: string, public sysparm_query?: string, public sysparm_sys_id?: string, public sysparm_record_count?: number, public displayvalue?: boolean, public displayvariables?: boolean) {
+  constructor(tableOROptions:ISNQueryOptions | string, sysparm_action?: GetActions | PostActions, public sysparm_view?: string, public sysparm_query?: string, public sysparm_sys_id?: string, public sysparm_record_count?: number, public displayvalue?: boolean, public displayvariables?: boolean, public data?:any, public timeout?:number) {
     if(typeof tableOROptions === 'string') {
       this.table = tableOROptions;
       this.sysparm_action = sysparm_action;
@@ -39,13 +43,15 @@ export class SNQuery implements ISNQuery {
       this.sysparm_record_count = tableOROptions.sysparm_record_count;
       this.displayvalue = tableOROptions.displayvalue;
       this.displayvariables = tableOROptions.displayvariables;
+      this.data = tableOROptions.data;
+      this.timeout = tableOROptions.timeout;
     }
 
     debug('SN Query Created: %O', this);
     if(this.table == null) {
       throw new Error('A table must be specified');
     }
-    if(this.sysparm_action == null) {
+    if(this.sysparm_action == null || !(this.sysparm_action in GetActions || this.sysparm_action in PostActions)) {
       throw new Error('An action must be specified');
     }
     if(this.sysparm_action == GetActions.get && !this.sysparm_sys_id) {
@@ -54,13 +60,22 @@ export class SNQuery implements ISNQuery {
     if(this.sysparm_action == PostActions.deleteRecord && !this.sysparm_sys_id) {
       throw new Error('When using the "deleteRecord" action, you must specify a sys_id.');
     }
+    if(([PostActions.insert, PostActions.insertMultiple, PostActions.update].indexOf(<PostActions>this.sysparm_action) != -1) && !this.data) {
+      throw new Error('When posting an insert or and update, data must be provided.');
+    }
+    if(this.sysparm_action == PostActions.update && !this.sysparm_query) {
+      throw new Error('When using the "update" action, you must specify a query.');
+    }
+    if(this.sysparm_action == PostActions.deleteMultiple && !this.sysparm_query) {
+      throw new Error('When using the "deleteMultiple" action, a query must be provided.');
+    }
   }
 
   getQueryUrl(): string {
     debug('Generating query with %O', this);
     var url = this.table;
     url += '.do?JSONv2';
-    url += '&sys_param_action=' + GetActions[this.sysparm_action];
+    url += '&sysparm_action=' + this.sysparm_action;
 
     if (this.sysparm_view) {
       url += '&sysparm_view=' + this.sysparm_view;
