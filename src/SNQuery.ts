@@ -18,7 +18,7 @@ export interface ISNQueryOptions {
   timeout?:number;
 }
 
-interface ISNQuery extends ISNQueryOptions {
+export interface ISNQuery extends ISNQueryOptions {
   getQueryUrl(): string;
 }
 

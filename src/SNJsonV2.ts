@@ -9,7 +9,7 @@ import * as request from 'request-promise-native';
 
 debug('booting SNJsonV2');
 
-interface ISNJsonV2 {
+export interface ISNJsonV2 {
   instance:string;
 
   run(query:SNQuery):Promise<ISNRecords>;
