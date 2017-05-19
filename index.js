@@ -1,6 +1,6 @@
 "use strict";
-var sn = require("./dist");
-exports.SNJsonV2 = sn.SNJsonV2;
-exports.SNQuery = sn.SNQuery;
-exports.GetActions = sn.GetActions;
-exports.PostActions = sn.PostActions;
+var dist_1 = require("./dist");
+exports.SNJsonV2 = dist_1.SNJsonV2;
+exports.SNQuery = dist_1.SNQuery;
+exports.GetActions = dist_1.GetActions;
+exports.PostActions = dist_1.PostActions;
