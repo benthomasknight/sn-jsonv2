@@ -1,6 +1,6 @@
 {
   "name": "sn-jsonv2",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wrapper for the ServiceNow JSONv2 API",
   "main": "index.js",
   "scripts": {
